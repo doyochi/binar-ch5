@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import id.hikmah.binar.chapter5.R
+import id.hikmah.binar.chapter5.databinding.ItemCarBinding
 import id.hikmah.binar.chapter5.model.CarItem
 
 class CarAdapter : RecyclerView.Adapter<CarAdapter.CarViewHolder>(){
@@ -28,8 +30,8 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarViewHolder>(){
     fun updateData(cars: List<CarItem>) = listDiffer.submitList(cars)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_car, parent, false)
-        return CarViewHolder(view)
+        val binding = ItemCarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CarViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CarViewHolder, position: Int) {
@@ -38,12 +40,23 @@ class CarAdapter : RecyclerView.Adapter<CarAdapter.CarViewHolder>(){
 
     override fun getItemCount(): Int = listDiffer.currentList.size
 
-    inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        private val ivCar = view.findViewById<ImageView>(R.id.iv_car)
-        private val tvCarName = view.findViewById<TextView>(R.id.tv_car_name)
+    /*
+    View holder wajib extend RecyclerView ViewHolder
+    ViewHolder butuh view, maka kita tambahkan parameter view
 
+    Untuk view binding
+    bidning.root == view
+    jd kita bisa mengganti view dengan binding.root
+     */
+
+    inner class CarViewHolder(private val binding: ItemCarBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: CarItem){
-            tvCarName.text = item.name
+            binding.apply {
+                tvCarName.text = item.name
+                Glide.with(itemView.context)
+                    .load(item.image)
+                    .into(ivCar)
+            }
         }
     }
 }

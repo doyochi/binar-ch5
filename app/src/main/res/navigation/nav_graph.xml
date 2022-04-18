@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/day3Fragment">
+
+    <fragment
+        android:id="@+id/day3Fragment"
+        android:name="id.hikmah.binar.chapter5.day3.Day3Fragment"
+        android:label="fragment_day3"
+        tools:layout="@layout/fragment_day3" />
+</navigation>
