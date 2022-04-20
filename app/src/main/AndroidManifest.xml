@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Chapter5">
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".day4.Day4Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

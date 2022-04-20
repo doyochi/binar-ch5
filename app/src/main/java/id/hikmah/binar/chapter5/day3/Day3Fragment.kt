@@ -14,7 +14,11 @@ import id.hikmah.binar.chapter5.adapter.CarAdapter
 import id.hikmah.binar.chapter5.databinding.FragmentDay3Binding
 import id.hikmah.binar.chapter5.databinding.LayoutDialogAddBinding
 import id.hikmah.binar.chapter5.model.CarItem
+import id.hikmah.binar.chapter5.model.RegisterRequest
+import id.hikmah.binar.chapter5.model.RegisterResponse
 import id.hikmah.binar.chapter5.service.APIClient
+import id.hikmah.binar.chapter5.service.APIService
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,7 +84,9 @@ class Day3Fragment : Fragment() {
         binding.fabAdd.setOnClickListener{
 //            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
             createCustomDialog{email, password ->
-                Toast.makeText(requireContext(), "email: $email, password: $password", Toast.LENGTH_SHORT).show()
+                binding.pbCar.isVisible = true
+                registerNewAdmin(email, password)
+//                Toast.makeText(requireContext(), "email: $email, password: $password", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -103,6 +109,31 @@ class Day3Fragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun registerNewAdmin(email: String, password: String){
+        val apiService = APIClient.instance
+        val request = RegisterRequest(email = email, password = password, role = "admin")
+        apiService.registerAdmin(request).enqueue(object : Callback<RegisterResponse>{
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
+//                if (response.isSuccessful){
+//                    response.body()
+                    Toast.makeText(requireContext(), "Register Success", Toast.LENGTH_SHORT).show()
+//                }else{
+//                    val objError = JSONObject(response.errorBody()!!.string())
+//                    val message = objError.getString("message")
+//                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+//                }
+                binding.pbCar.isVisible = false
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                binding.pbCar.isVisible = false
+            }
+        })
     }
 
 }
