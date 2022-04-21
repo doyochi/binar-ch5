@@ -18,6 +18,10 @@ class StudentRepo(context: Context) {
         mDb?.studentDao()?.updateStudent(student)
     }
 
+    suspend fun insertStudent(student: Student) = withContext(Dispatchers.IO){
+        mDb?.studentDao()?.insertStudent(student)
+    }
+
     suspend fun deleteStudent(student: Student) = withContext(Dispatchers.IO){
         mDb?.studentDao()?.deleteStudent(student)
     }

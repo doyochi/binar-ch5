@@ -24,7 +24,7 @@ class Day4Activity : AppCompatActivity() {
 //    private lateinit var vModel: Day4ViewModel
 
     //View model dengan parameter
-    private val viewModel: Day4ViewModel by viewModelsFactory { Day4ViewModel(studentRepo) }
+    private val viewModel: Day4ViewModel by viewModelsFactory { Day4ViewModel(studentRepo, APIService) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
